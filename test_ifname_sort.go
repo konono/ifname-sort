@@ -197,6 +197,7 @@ func main() {
 
 	//1
 	inameSlice := cInameSlice("eth[0-9]")
+	//inameSlice := cInameSlice("")
 
 	//2
 	macSlice := cMacSlice(inameSlice)
@@ -212,16 +213,28 @@ func main() {
 		ia.Ifaces = append(ia.Ifaces, iface)
 	}
 
+	//debug
+	for i := 0; i < len(ia.Ifaces); i++ {
+		fmt.Println(ia.Ifaces[i])
+	}
+
 	//5
 	sort.Sort(ia)
 	for i := 0; i < len(ia.Ifaces); i++ {
 		ia.Ifaces[i].Iname = "eth" + strconv.Itoa(i)
 	}
 
+	//debug
+	for i := 0; i < len(ia.Ifaces); i++ {
+		fmt.Println(ia.Ifaces[i])
+	}
+
 	//6
-	ePersistentNetTpl("/etc/udev/rules.d/", ia)
+	//ePersistentNetTpl("/etc/udev/rules.d/", ia)
+	ePersistentNetTpl("/", ia)
 
 	//7
-	eIfcfgTpl("/etc/sysconfig/network-scripts/", ia)
+	//eIfcfgTpl("/etc/sysconfig/network-scripts/", ia)
+	eIfcfgTpl("/", ia)
 
 }
