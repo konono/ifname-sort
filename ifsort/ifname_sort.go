@@ -188,19 +188,21 @@ func main() {
 	var iface Iface
 	var ia IfaceSlice
 
+	/*test data
 	inameSlice := []string{"eth0", "eth1", "eth2", "eth3", "eth4", "eth5"}
 	macSlice := []string{"cc:46:d6:4e:d6:68", "cc:46:d6:4e:d6:69", "cc:46:d6:4e:d6:6a", "cc:46:d6:4e:d6:6b", "cc:46:d6:58:c7:1a", "cc:46:d6:58:c7:1b"}
 	pnameSlice := []string{"0000:04:00.0", "0000:04:00.1", "0000:04:00.2", "0000:04:00.3", "0000:01:00.0", "0000:01:00.1"}
 
+	*/
+
 	//1
-	//inameSlice := cInameSlice("enp0s25")
-	//inameSlice := cInameSlice("")
+	inameSlice := cInameSlice("eth[0-9]")
 
 	//2
-	//macSlice := cMacSlice(inameSlice)
+	macSlice := cMacSlice(inameSlice)
 
 	//3
-	//pnameSlice := cPnameSlice(inameSlice)
+	pnameSlice := cPnameSlice(inameSlice)
 
 	//4
 	for i := 0; i < len(inameSlice); i++ {
@@ -210,29 +212,16 @@ func main() {
 		ia.Ifaces = append(ia.Ifaces, iface)
 	}
 
-	//debug
-	for i := 0; i < len(ia.Ifaces); i++ {
-		fmt.Println(ia.Ifaces[i])
-	}
-	fmt.Println("############################")
-
 	//5
 	sort.Sort(ia)
 	for i := 0; i < len(ia.Ifaces); i++ {
 		ia.Ifaces[i].Iname = "eth" + strconv.Itoa(i)
 	}
 
-	//debug
-	for i := 0; i < len(ia.Ifaces); i++ {
-		fmt.Println(ia.Ifaces[i])
-	}
-
 	//6
-	//ePersistentNetTpl("/etc/udev/rules.d/", ia)
-	ePersistentNetTpl("/home/kono/tmp/", ia)
+	ePersistentNetTpl("/etc/udev/rules.d/", ia)
 
 	//7
-	//eIfcfgTpl("/etc/sysconfig/network-scripts/", ia)
-	eIfcfgTpl("/home/kono/tmp/", ia)
+	eIfcfgTpl("/etc/sysconfig/network-scripts/", ia)
 
 }
